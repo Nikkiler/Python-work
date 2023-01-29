@@ -6,4 +6,7 @@ def main():
         say = input("What do you want to say? ")
         print(username + ': ' + say)
         answer = input("Hello, " + username + "! Do you want to say something?")
+        answer = answer.lower()
     l = input("Press Enter To Exit")
+if __name__ == '__main__':
+    main()
