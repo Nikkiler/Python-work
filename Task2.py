@@ -9,8 +9,11 @@ def main():
             userinput = input("Please, enter the username")
             while userinput in username:
                 userinput = input("Username already registered, please enter another name")
-        username.add(userinput)
-        print("User " + userinput + " registered")
+            username.add(userinput)
+            print("User " + userinput + " registered")
+        elif selection == '4':
+            for user in username:
+                print(user)
         exit = input("You selected " + selection + ", press enter to go back")
         selection = (input("Welcome to the secret chat please choose one of the following menu items by choosing the corosponding menu item and hitting enter 1. Create a user, 2. Login, 3.Connect to the chat, 4. List all registered users, 5. Exit."))
     print("Thank you for using our secret chat!")
