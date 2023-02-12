@@ -25,8 +25,6 @@ def main():
             option1(username)
         elif selection == '4':
             option4(username)
-        exit = input("You selected " + selection + ", press enter to go back")
-        print("Welcome to the secret chat")
         print("please choose one of the following menu items")
         print("by choosing the corosponding menu item and hitting enter")
         print("1. Create a user")
