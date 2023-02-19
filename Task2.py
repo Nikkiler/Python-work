@@ -36,8 +36,12 @@ def main():
     print("Thank you for using our secret chat!")
 def option1(username):
     userinput = input("Please, enter the username")
+    while len(userinput) == 0:
+        userinput = input("Username is null please enter another name, please enter another name")
     while userinput in username:
         userinput = input("Username already registered, please enter another name")
+        while len(userinput) == 0:
+            userinput = input("Username is null please enter another name, please enter another name")
     username.add(userinput)
     print("User " + userinput + " registered")
 def option4(username):
