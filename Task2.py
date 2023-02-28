@@ -1,37 +1,17 @@
 def main():
     username = set()
-    print("Welcome to the secret chat")
-    print("please choose one of the following menu items")
-    print("by choosing the corosponding menu item and hitting enter")
-    print("1. Create a user")
-    print("2. Login")
-    print("3.Connect to the chat")
-    print("4. List all registered users")
-    print("5. Exit.")
+    menu()
     selection = (input(""))
     options = {'1' , '2' , '3', '4', '5'}
     while selection not in options:
-        print("Welcome to the secret chat")
-        print("please choose one of the following menu items")
-        print("by choosing the corosponding menu item and hitting enter")
-        print("1. Create a user")
-        print("2. Login")
-        print("3.Connect to the chat")
-        print("4. List all registered users")
-        print("5. Exit.")
+        menu()
         selection = (input(""))
     while selection != '5':
         if selection == '1':
             option1(username)
         elif selection == '4':
             option4(username)
-        print("please choose one of the following menu items")
-        print("by choosing the corosponding menu item and hitting enter")
-        print("1. Create a user")
-        print("2. Login")
-        print("3.Connect to the chat")
-        print("4. List all registered users")
-        print("5. Exit.")
+            menu()
         selection = (input(""))
     print("Thank you for using our secret chat!")
 def option1(username):
@@ -47,6 +27,13 @@ def option1(username):
 def option4(username):
     for user in username:
         print(user)
-
+def menu():
+    print("please choose one of the following menu items")
+    print("by choosing the corosponding menu item and hitting enter")
+    print("1. Create a user")
+    print("2. Login")
+    print("3. Connect to the chat")
+    print("4. List all registered users")
+    print("5. Exit.")
 if __name__ == '__main__':
     main()
