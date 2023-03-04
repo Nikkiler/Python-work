@@ -24,6 +24,7 @@ def option1(username):
             userinput = input("Username is null please enter another name, please enter another name")
     username.add(userinput)
     print("User " + userinput + " registered")
+    User(userinput)
 def option4(username):
     for user in username:
         print(user)
@@ -35,5 +36,14 @@ def menu():
     print("3. Connect to the chat")
     print("4. List all registered users")
     print("5. Exit.")
+class Admin:
+    def __init__(self, name, ):
+        self.name = name
+class Moderator:
+    def __init__(self, name, ):
+        self.name = name
+class User:
+    def __init__(self, name, ):
+        self.name = name
 if __name__ == '__main__':
     main()
