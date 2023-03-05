@@ -1,41 +1,70 @@
 def main():
-    username = set()
+    username = {}
     menu()
     selection = (input(""))
-    options = {'1' , '2' , '3', '4', '5'}
+    options = {'1' , '2' , '3', '4', '5', '6'}
     while selection not in options:
         menu()
         selection = (input(""))
-    while selection != '5':
+    while selection != '6':
         if selection == '1':
             option1(username)
-        elif selection == '4':
-            option4(username)
             menu()
-        selection = (input(""))
+        elif selection == '5':
+            option5(username)
+            menu()
+        elif selection == '4':
+            print("Please enter username")
+            changed_user = input()
+            if changed_user in username:
+                print("Change to")
+                print("1. Admin")
+                print("2. Moderator")
+                print("3. User")
+                new_roll = input()
+                if username[changed_user] == "Admin" and new_roll != username[changed_user]:
+                    while True:
+                        print("Error cannot downgrade Admin user")
+                        print("Please choose again")
+                        changed_user2 = input()
+                        if changed_user != changed_user2:
+                            changed_user = changed_user2
+                            break
+                username[changed_user] = new_roll
+            else:
+                print("This action will create a new user with chosen role")
+                print("1. Admin")
+                print("2. Moderator")
+                print("3. User")
+                new_roll = input()
+                username[changed_user] = new_roll
+
+        selection = input("")
+
     print("Thank you for using our secret chat!")
 def option1(username):
-    userinput = input("Please, enter the username")
+    userinput = input("Please, enter the username ")
     while len(userinput) == 0:
-        userinput = input("Username is null please enter another name, please enter another name")
+        userinput = input("Username is null please enter another name, please enter another name ")
     while userinput in username:
-        userinput = input("Username already registered, please enter another name")
+        userinput = input("Username already registered, please enter another name ")
         while len(userinput) == 0:
-            userinput = input("Username is null please enter another name, please enter another name")
-    username.add(userinput)
+            userinput = input("Username is null please enter another name, please enter another name ")
+    username[userinput] = "User"
     print("User " + userinput + " registered")
-    User(userinput)
-def option4(username):
-    for user in username:
-        print(user)
+
+def option5(username):
+    for user, permisions in username.items():
+        print(user + "is a " + permisions)
 def menu():
     print("please choose one of the following menu items")
     print("by choosing the corosponding menu item and hitting enter")
     print("1. Create a user")
     print("2. Login")
     print("3. Connect to the chat")
-    print("4. List all registered users")
-    print("5. Exit.")
+    print("4. Assign role to existing user")
+    print("5. List all registered users")
+    print("6. Exit.")
 class Admin:
     def __init__(self, name, ):
         self.name = name
