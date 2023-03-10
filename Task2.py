@@ -14,31 +14,8 @@ def main():
             option5(username)
             menu()
         elif selection == '4':
-            print("Please enter username")
-            changed_user = input()
-            if changed_user in username:
-                print("Change to")
-                print("1. Admin")
-                print("2. Moderator")
-                print("3. User")
-                new_roll = input()
-                if username[changed_user] == "Admin" and new_roll != username[changed_user]:
-                    while True:
-                        print("Error cannot downgrade Admin user")
-                        print("Please choose again")
-                        changed_user2 = input()
-                        if changed_user != changed_user2:
-                            changed_user = changed_user2
-                            break
-                username[changed_user] = new_roll
-            else:
-                print("This action will create a new user with chosen role")
-                print("1. Admin")
-                print("2. Moderator")
-                print("3. User")
-                new_roll = input()
-                username[changed_user] = new_roll
-
+            option4(username)
+            menu()
         selection = input("")
 
     print("Thank you for using our secret chat!")
@@ -53,9 +30,53 @@ def option1(username):
     username[userinput] = "User"
     print("User " + userinput + " registered")
 
+def option4(username):
+    print("Please enter username")
+    changed_user = input()
+    if changed_user in username:
+        if username[changed_user] == "Admin":
+            while True:
+                print("Error cannot downgrade Admin user")
+                print("Please choose new user")
+                changed_user2 = input()
+                if changed_user != changed_user2 and changed_user2 in username and username[changed_user2] != 'Admin':
+                    changed_user = changed_user2
+                    print("Change to")
+                    print("1. Admin")
+                    print("2. Moderator")
+                    print("3. User")
+                    new_roll = input()
+                    username[changed_user2] = new_roll
+                    break
+                elif changed_user2 not in username:
+                    print("This action will create a new user with chosen role")
+                    print("1. Admin")
+                    print("2. Moderator")
+                    print("3. User")
+                    new_roll = input()
+                    username[changed_user] = new_roll
+                    break
+        elif username[changed_user] != 'Admin':
+            print("Change to")
+            print("1. Admin")
+            print("2. Moderator")
+            print("3. User")
+            new_roll = input()
+            username[changed_user] = new_roll
+
+
+    else:
+        print("This action will create a new user with chosen role")
+        print("1. Admin")
+        print("2. Moderator")
+        print("3. User")
+        new_roll = input()
+        username[changed_user] = new_roll
+
+
 def option5(username):
     for user, permisions in username.items():
-        print(user + "is a " + permisions)
+        print(user + " is a " + permisions)
 def menu():
     print("please choose one of the following menu items")
     print("by choosing the corosponding menu item and hitting enter")
