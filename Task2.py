@@ -72,6 +72,7 @@ def option4(username):
         print("3. User")
         new_roll = input()
         username[changed_user] = new_roll
+    print("User has either been created with permissions chosen or User permissions have been updated")
 
 
 def option5(username):
