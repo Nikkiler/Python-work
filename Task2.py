@@ -41,36 +41,32 @@ def option4(username):
                 changed_user2 = input()
                 if changed_user != changed_user2 and changed_user2 in username and username[changed_user2] != 'Admin':
                     changed_user = changed_user2
-                    print("Change to")
-                    print("1. Admin")
-                    print("2. Moderator")
-                    print("3. User")
-                    new_roll = input()
-                    username[changed_user2] = new_roll
+                    userpermissions()
+                    new_roll = input('')
+                    if new_roll != 'Admin' or new_roll != 'Moderator' or new_roll != 'User':
+                        new_roll = usertype(new_roll)
+                    username[changed_user] = new_roll
                     break
                 elif changed_user2 not in username:
                     print("This action will create a new user with chosen role")
-                    print("1. Admin")
-                    print("2. Moderator")
-                    print("3. User")
-                    new_roll = input()
-                    username[changed_user] = new_roll
+                    userpermissions()
+                    new_roll = input('')
+                    if new_roll != 'Admin' or 'Moderator' or 'User':
+                        new_roll = usertype(new_roll)
+                    username[changed_user2] = new_roll
                     break
         elif username[changed_user] != 'Admin':
-            print("Change to")
-            print("1. Admin")
-            print("2. Moderator")
-            print("3. User")
-            new_roll = input()
+            userpermissions()
+            new_roll = input('')
+            if new_roll != 'Admin' or 'Moderator' or 'User':
+                new_roll = usertype(new_roll)
             username[changed_user] = new_roll
-
-
     else:
         print("This action will create a new user with chosen role")
-        print("1. Admin")
-        print("2. Moderator")
-        print("3. User")
-        new_roll = input()
+        userpermissions()
+        new_roll = input('')
+        if new_roll != 'Admin' or 'Moderator' or 'User':
+            new_roll = usertype(new_roll)
         username[changed_user] = new_roll
     print("User has either been created with permissions chosen or User permissions have been updated")
 
@@ -87,14 +83,18 @@ def menu():
     print("4. Assign role to existing user")
     print("5. List all registered users")
     print("6. Exit.")
-class Admin:
-    def __init__(self, name, ):
-        self.name = name
-class Moderator:
-    def __init__(self, name, ):
-        self.name = name
-class User:
-    def __init__(self, name, ):
-        self.name = name
+def userpermissions():
+    print("User types to change to or create are below")
+    print("Also please keep in mind to enter the name rather than the number of the user type")
+    print("1. Admin")
+    print("2. Moderator")
+    print("3. User")
+def usertype(new_role):
+    while new_role != 'Admin' or 'Moderator' or 'User':
+        userpermissions()
+        new_role = input()
+        if new_role == 'Admin' or new_role == 'Moderator' or new_role == "User":
+            break
+    return new_role
 if __name__ == '__main__':
     main()
