@@ -43,7 +43,7 @@ def option4(username):
                     changed_user = changed_user2
                     userpermissions()
                     new_roll = input('')
-                    if new_roll != 'Admin' or new_roll != 'Moderator' or new_roll != 'User':
+                    if new_roll != 'Admin' + 'Moderator' + 'User':
                         new_roll = usertype(new_roll)
                     username[changed_user] = new_roll
                     break
@@ -51,21 +51,21 @@ def option4(username):
                     print("This action will create a new user with chosen role")
                     userpermissions()
                     new_roll = input('')
-                    if new_roll != 'Admin' or new_roll != 'Moderator' or new_roll != 'User':
+                    if new_roll != 'Admin' + 'Moderator' + 'User':
                         new_roll = usertype(new_roll)
                     username[changed_user2] = new_roll
                     break
         elif username[changed_user] != 'Admin':
             userpermissions()
             new_roll = input('')
-            if new_roll != 'Admin' or new_roll != 'Moderator' or new_roll != 'User':
+            if new_roll != 'Admin' + 'Moderator' + 'User':
                 new_roll = usertype(new_roll)
             username[changed_user] = new_roll
     else:
         print("This action will create a new user with chosen role")
         userpermissions()
         new_roll = input('')
-        if new_roll != 'Admin' or new_roll != 'Moderator' or new_roll != 'User':
+        if new_roll != 'Admin' + 'Moderator' + 'User':
             new_roll = usertype(new_roll)
         username[changed_user] = new_roll
     print("User has either been created with permissions chosen or User permissions have been updated")
