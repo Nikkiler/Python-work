@@ -44,7 +44,7 @@ def option4(username):
                     printpermissions()
                     new_roll = input('')
                     new_roll = conversion(new_roll)
-                    if new_roll != 'Admin' and 'Moderator' and 'User':
+                    if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
                         new_roll = usertype(new_roll)
                         new_roll = conversion(new_roll)
                     username[changed_user] = new_roll
@@ -54,7 +54,7 @@ def option4(username):
                     printpermissions()
                     new_roll = input('')
                     new_roll = conversion(new_roll)
-                    if new_roll != 'Admin' and 'Moderator' and 'User':
+                    if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
                         new_roll = usertype(new_roll)
                         new_roll = conversion(new_roll)
                     username[changed_user2] = new_roll
@@ -63,7 +63,7 @@ def option4(username):
             printpermissions()
             new_roll = input('')
             new_roll = conversion(new_roll)
-            if new_roll != 'Admin' and 'Moderator' and 'User':
+            if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
                 new_roll = usertype(new_roll)
                 new_roll = conversion(new_roll)
             username[changed_user] = new_roll
@@ -72,7 +72,7 @@ def option4(username):
         printpermissions()
         new_roll = input('')
         new_roll = conversion(new_roll)
-        if new_roll != 'Admin' and 'Moderator' and 'User':
+        if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
             new_roll = usertype(new_roll)
             new_roll = conversion(new_roll)
         username[changed_user] = new_roll
@@ -109,6 +109,6 @@ def conversion(new_role):
     elif new_role == '2':
         return 'Moderator'
     elif new_role == '3':
-        return "User"
+        return 'User'
 if __name__ == '__main__':
     main()
