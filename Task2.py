@@ -43,30 +43,38 @@ def option4(username):
                     changed_user = changed_user2
                     printpermissions()
                     new_roll = input('')
+                    new_roll = conversion(new_roll)
                     if new_roll != 'Admin' and 'Moderator' and 'User':
                         new_roll = usertype(new_roll)
+                        new_roll = conversion(new_roll)
                     username[changed_user] = new_roll
                     break
                 elif changed_user2 not in username:
                     print("This action will create a new user with chosen role")
                     printpermissions()
                     new_roll = input('')
+                    new_roll = conversion(new_roll)
                     if new_roll != 'Admin' and 'Moderator' and 'User':
                         new_roll = usertype(new_roll)
+                        new_roll = conversion(new_roll)
                     username[changed_user2] = new_roll
                     break
         elif username[changed_user] != 'Admin':
             printpermissions()
             new_roll = input('')
+            new_roll = conversion(new_roll)
             if new_roll != 'Admin' and 'Moderator' and 'User':
                 new_roll = usertype(new_roll)
+                new_roll = conversion(new_roll)
             username[changed_user] = new_roll
     else:
         print("This action will create a new user with chosen role")
         printpermissions()
         new_roll = input('')
+        new_roll = conversion(new_roll)
         if new_roll != 'Admin' and 'Moderator' and 'User':
             new_roll = usertype(new_roll)
+            new_roll = conversion(new_roll)
         username[changed_user] = new_roll
     print("User has either been created with permissions chosen or User permissions have been updated")
 
@@ -85,16 +93,22 @@ def menu():
     print("6. Exit.")
 def printpermissions():
     print("User types to change to or create are below")
-    print("Also please keep in mind to enter the name rather than the number of the user type")
     print("1. Admin")
     print("2. Moderator")
     print("3. User")
 def usertype(new_role):
-    while new_role != 'Admin' and 'Moderator' and 'User':
+    while new_role != '1' and '2' and '3':
         printpermissions()
         new_role = input()
-        if new_role == 'Admin' or new_role == 'Moderator' or new_role == "User":
+        if new_role == '1' or new_role == '2' or new_role == "3":
             break
     return new_role
+def conversion(new_role):
+    if new_role == '1':
+        return 'Admin'
+    elif new_role == '2':
+        return 'Moderator'
+    elif new_role == '3':
+        return "User"
 if __name__ == '__main__':
     main()
