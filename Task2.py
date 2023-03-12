@@ -35,30 +35,7 @@ def option4(username):
     changed_user = input()
     if changed_user in username:
         if username[changed_user] == "Admin":
-            while True:
                 print("Error cannot downgrade Admin user")
-                print("Please choose new user")
-                changed_user2 = input()
-                if changed_user != changed_user2 and changed_user2 in username and username[changed_user2] != 'Admin':
-                    changed_user = changed_user2
-                    printpermissions()
-                    new_roll = input('')
-                    new_roll = conversion(new_roll)
-                    if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
-                        new_roll = usertype(new_roll)
-                        new_roll = conversion(new_roll)
-                    username[changed_user] = new_roll
-                    break
-                elif changed_user2 not in username:
-                    print("This action will create a new user with chosen role")
-                    printpermissions()
-                    new_roll = input('')
-                    new_roll = conversion(new_roll)
-                    if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
-                        new_roll = usertype(new_roll)
-                        new_roll = conversion(new_roll)
-                    username[changed_user2] = new_roll
-                    break
         elif username[changed_user] != 'Admin':
             printpermissions()
             new_roll = input('')
@@ -76,7 +53,7 @@ def option4(username):
             new_roll = usertype(new_roll)
             new_roll = conversion(new_roll)
         username[changed_user] = new_roll
-    print("User has either been created with permissions chosen or User permissions have been updated")
+    print("User has either been created with permissions chosen or User permissions have been updated or u have left this option")
 
 
 def option5(username):
