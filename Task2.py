@@ -1,5 +1,16 @@
 def main():
     username = {}
+    user_pass = {}
+    while True:
+        print("If you are an existing User Login if not please Register")
+        print("1.Login")
+        print("2.Register")
+        choice = input()
+        if choice == '1':
+            break
+        elif choice == '2':
+            option1(username, user_pass)
+            break
     menu()
     selection = (input(""))
     options = {'1' , '2' , '3', '4', '5', '6'}
@@ -8,7 +19,7 @@ def main():
         selection = (input(""))
     while selection != '6':
         if selection == '1':
-            option1(username)
+            option1(username, user_pass)
             menu()
         elif selection == '5':
             option5(username)
@@ -19,7 +30,7 @@ def main():
         selection = input("")
 
     print("Thank you for using our secret chat!")
-def option1(username):
+def option1(username, passwords):
     userinput = input("Please, enter the username ")
     while len(userinput) == 0:
         userinput = input("Username is null please enter another name, please enter another name ")
@@ -28,6 +39,9 @@ def option1(username):
         while len(userinput) == 0:
             userinput = input("Username is null please enter another name, please enter another name ")
     username[userinput] = "User"
+    print("Please enter a password for this user:")
+    password = input()
+    passwords[userinput] = password
     print("User " + userinput + " registered")
 
 def option4(username):
@@ -87,5 +101,6 @@ def conversion(new_role):
         return 'Moderator'
     elif new_role == '3':
         return 'User'
+
 if __name__ == '__main__':
     main()
