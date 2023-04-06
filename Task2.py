@@ -1,34 +1,40 @@
 def main():
     username = {}
     user_pass = {}
+    current_user = None
     while True:
         print("If you are an existing User Login if not please Register")
         print("1.Login")
         print("2.Register")
         choice = input()
         if choice == '1':
+            register = login(username, user_pass)
+            if register == False:
+                current_user = option1(username, user_pass)
             break
         elif choice == '2':
-            option1(username, user_pass)
+            current_user = option1(username, user_pass)
             break
-    menu()
-    selection = (input(""))
-    options = {'1' , '2' , '3', '4', '5', '6'}
-    while selection not in options:
+
+    if username[current_user] != 'Admin':
         menu()
         selection = (input(""))
-    while selection != '6':
-        if selection == '1':
-            option1(username, user_pass)
+        options = {'1' , '2' , '3', '4'}
+        while selection not in options:
             menu()
-        elif selection == '5':
-            option5(username)
-            menu()
-        elif selection == '4':
-            option4(username)
-            menu()
-        selection = input("")
-
+            selection = (input(""))
+        while selection != '4':
+            if selection == '1':
+                current_user = option1(username, user_pass)
+                menu()
+                selection = input()
+                if username[current_user] == 'Admin':
+                    admin_account(username, user_pass, current_user)
+                    break
+            elif selection == '4':
+                option5(username)
+                menu()
+                selection = input()
     print("Thank you for using our secret chat!")
 def option1(username, passwords):
     userinput = input("Please, enter the username ")
@@ -43,6 +49,7 @@ def option1(username, passwords):
     password = input()
     passwords[userinput] = password
     print("User " + userinput + " registered")
+    return userinput
 
 def option4(username):
     print("Please enter username")
@@ -77,11 +84,17 @@ def menu():
     print("please choose one of the following menu items")
     print("by choosing the corosponding menu item and hitting enter")
     print("1. Create a user")
-    print("2. Login")
-    print("3. Connect to the chat")
-    print("4. Assign role to existing user")
-    print("5. List all registered users")
-    print("6. Exit.")
+    print("2. Connect to the chat")
+    print("3. List all registered users")
+    print("4. Exit.")
+def admin_menu():
+    print("please choose one of the following menu items")
+    print("by choosing the corosponding menu item and hitting enter")
+    print("1. Create a user")
+    print("2. Connect to the chat")
+    print("3. Change user role")
+    print("4. List all registered users")
+    print("5. Exit.")
 def printpermissions():
     print("User types to change to or create are below")
     print("1. Admin")
@@ -101,6 +114,51 @@ def conversion(new_role):
         return 'Moderator'
     elif new_role == '3':
         return 'User'
+def login(username, user_pass):
+    print("please enter username")
+    usercheck = input()
+    while usercheck not in username:
+        print("please enter a created user")
+        print("if you would like to go back and register a user please press enter")
+        usercheck = input()
+        if len(usercheck) == 0:
+            return False
+            break
+        elif usercheck in username:
+            print("Welcome " + usercheck + " Please enter you password")
+            passcheck = input()
+            while user_pass[usercheck] != passcheck:
+                print("Password is incorrect")
+                print("Please enter correct password")
+                passcheck = input()
+            print("Welcome back " + usercheck)
+            return usercheck
+
+def admin_account(username, user_pass, current_user):
+    if username[current_user] == 'Admin':
+        admin_menu()
+        selection = (input(""))
+        options = {'1' , '2' , '3', '4', '5'}
+        while selection not in options:
+            menu()
+            selection = (input(""))
+        while selection != '4':
+            if selection == '1':
+                current_user = option1(username, user_pass)
+                menu()
+                selection = input()
+                if username[current_user] == 'Admin':
+                    admin_account(username, user_pass, current_user)
+                    break
+            elif selection == '5':
+                option5(username)
+                menu()
+                selection = input()
+            elif selection == '4':
+                option4(username)
+                menu()
+                selection = input("")
+
 
 if __name__ == '__main__':
     main()
