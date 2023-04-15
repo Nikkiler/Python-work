@@ -1,6 +1,6 @@
 def main():
-    username = {}
-    user_pass = {}
+    username = {"Bob": "Admin"}
+    user_pass = {"Bob": "All_that_is_gold_does_not_glitter"}
     current_user = None
     while True:
         print("If you are an existing User Login if not please Register")
@@ -11,7 +11,10 @@ def main():
             register = login(username, user_pass)
             if register == False:
                 current_user = option1(username, user_pass)
+            else:
+                current_user = register
             break
+
         elif choice == '2':
             current_user = option1(username, user_pass)
             break
@@ -35,6 +38,8 @@ def main():
                 option5(username)
                 menu()
                 selection = input()
+    if username[current_user] == "Admin":
+        admin_account(username, user_pass, current_user)
     print("Thank you for using our secret chat!")
 def option1(username, passwords):
     userinput = input("Please, enter the username ")
@@ -133,6 +138,15 @@ def login(username, user_pass):
                 passcheck = input()
             print("Welcome back " + usercheck)
             return usercheck
+    if usercheck in username:
+        print("Welcome " + usercheck + " Please enter you password")
+        passcheck = input()
+        while user_pass[usercheck] != passcheck:
+            print("Password is incorrect")
+            print("Please enter correct password")
+            passcheck = input()
+        print("Welcome back " + usercheck)
+        return usercheck
 
 def admin_account(username, user_pass, current_user):
     if username[current_user] == 'Admin':
@@ -142,7 +156,7 @@ def admin_account(username, user_pass, current_user):
         while selection not in options:
             menu()
             selection = (input(""))
-        while selection != '4':
+        while selection != '5':
             if selection == '1':
                 current_user = option1(username, user_pass)
                 menu()
@@ -150,11 +164,11 @@ def admin_account(username, user_pass, current_user):
                 if username[current_user] == 'Admin':
                     admin_account(username, user_pass, current_user)
                     break
-            elif selection == '5':
+            elif selection == '4':
                 option5(username)
                 menu()
                 selection = input()
-            elif selection == '4':
+            elif selection == '3':
                 option4(username)
                 menu()
                 selection = input("")
