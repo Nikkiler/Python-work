@@ -31,7 +31,7 @@ def main():
                 if username[current_user] == 'Admin':
                     admin_account(username, user_pass, current_user)
                     break
-            elif selection == '4':
+            elif selection == '3':
                 option5(username)
                 menu()
                 selection = input()
