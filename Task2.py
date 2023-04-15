@@ -20,25 +20,8 @@ def main():
             break
 
     if username[current_user] != 'Admin':
-        menu()
-        selection = (input(""))
-        options = {'1' , '2' , '3', '4'}
-        while selection not in options:
-            menu()
-            selection = (input(""))
-        while selection != '4':
-            if selection == '1':
-                current_user = option1(username, user_pass)
-                menu()
-                selection = input()
-                if username[current_user] == 'Admin':
-                    admin_account(username, user_pass, current_user)
-                    break
-            elif selection == '3':
-                option5(username)
-                menu()
-                selection = input()
-    if username[current_user] == "Admin":
+        non_admin_account(username, user_pass, current_user)
+    elif username[current_user] == "Admin":
         admin_account(username, user_pass, current_user)
     print("Thank you for using our secret chat!")
 def option1(username, passwords):
@@ -54,7 +37,15 @@ def option1(username, passwords):
     password = input()
     passwords[userinput] = password
     print("User " + userinput + " registered")
-    return userinput
+    print("Would you like to switch to this user? Y/N")
+    yes_r_no = input("")
+    while yes_r_no != 'Y' or 'n' or 'N' or 'y':
+        print("please enter either Y or N")
+        yes_r_no = input("")
+    yes_r_no = yes_r_no.lower()
+    if yes_r_no == "y":
+        return False
+
 
 def option4(username):
     print("Please enter username")
@@ -158,21 +149,45 @@ def admin_account(username, user_pass, current_user):
             selection = (input(""))
         while selection != '5':
             if selection == '1':
+                previouse_user = current_user
                 current_user = option1(username, user_pass)
-                menu()
-                selection = input()
-                if username[current_user] == 'Admin':
+                if current_user == False:
+                    current_user = previouse_user
                     admin_account(username, user_pass, current_user)
                     break
+                elif username[current_user] == 'Admin':
+                    admin_account(username, user_pass, current_user)
+                    break
+                else:
+                    admin_account(username, user_pass, current_user)
+
             elif selection == '4':
                 option5(username)
-                menu()
-                selection = input()
+                admin_account(username, user_pass, current_user)
+                break
             elif selection == '3':
                 option4(username)
-                menu()
-                selection = input("")
-
-
+                admin_account(username, user_pass, current_user)
+                break
+def non_admin_account(username, user_pass, current_user):
+    current_user = current_user
+    menu()
+    selection = (input(""))
+    options = {'1', '2', '3', '4'}
+    while selection not in options:
+        menu()
+        selection = (input(""))
+    while selection != '4':
+        if selection == '1':
+            current_user = option1(username, user_pass)
+            menu()
+            selection = input()
+            if username[current_user] == 'Admin':
+                admin_account(username, user_pass, current_user)
+                break
+        elif selection == '3':
+            option5(username)
+            menu()
+            selection = input()
 if __name__ == '__main__':
     main()
