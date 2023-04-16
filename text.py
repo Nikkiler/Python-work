@@ -12,5 +12,5 @@ with open("test.csv", "r") as handler:
     report = {}
     for row in reader:
         print(row)
-        report = report | row
+        report.update(row)
 print(report)
