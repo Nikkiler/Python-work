@@ -37,6 +37,10 @@ def option1(username, passwords):
     password = input()
     passwords[userinput] = password
     print("User " + userinput + " registered")
+    with open('users.txt', 'r+') as rwf:
+        rwf.write(userinput + "\n")
+        rwf.write(password + "\n")
+        rwf.write(username[userinput] + "\n")
     print("Would you like to switch to this user? Y/N")
     yes_r_no = input("")
     yes_r_no = yes_r_no.lower()
@@ -73,6 +77,12 @@ def option4(username):
             new_roll = usertype(new_roll)
             new_roll = conversion(new_roll)
         username[changed_user] = new_roll
+        print("Please enter a password for this user:")
+        password = input()
+        with open('users.txt', 'r+') as rwf:
+            rwf.write(changed_user + "\n")
+            rwf.write(password + "\n")
+            rwf.write(username[changed_user] + "\n")
     print("User has either been created with permissions chosen or User permissions have been updated or u have left this option")
 
 
