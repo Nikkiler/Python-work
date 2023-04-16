@@ -39,11 +39,14 @@ def option1(username, passwords):
     print("User " + userinput + " registered")
     print("Would you like to switch to this user? Y/N")
     yes_r_no = input("")
-    while yes_r_no != 'Y' or 'n' or 'N' or 'y':
+    yes_r_no = yes_r_no.lower()
+    while yes_r_no != 'y' and yes_r_no != 'n':
         print("please enter either Y or N")
         yes_r_no = input("")
-    yes_r_no = yes_r_no.lower()
+        yes_r_no = yes_r_no.lower()
     if yes_r_no == "y":
+        return userinput
+    else:
         return False
 
 
@@ -145,7 +148,7 @@ def admin_account(username, user_pass, current_user):
         selection = (input(""))
         options = {'1' , '2' , '3', '4', '5'}
         while selection not in options:
-            menu()
+            admin_menu()
             selection = (input(""))
         while selection != '5':
             if selection == '1':
