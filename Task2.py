@@ -3,6 +3,8 @@ def main():
     current_user = None
     cr = None
     users = {}
+    password = None
+    usertypes = None
     with open("users.csv", "r") as handler:
         reader = csv.DictReader(handler, delimiter=',')
         for row in reader:
@@ -25,13 +27,13 @@ def main():
         elif choice == '2':
             current_user = option1(users)
             break
-
-    if users[current_user["Usertype"]] != 'Admin':
+    usertypes = users[current_user]
+    if usertypes["Usertype"] != 'Admin':
         non_admin_account(users, current_user)
-    elif users[current_user["Usertype"]] == "Admin":
+    elif usertypes["Usertype"] == "Admin":
         admin_account(users, current_user)
     print("Thank you for using our secret chat!")
-def option1(username, passwords):
+def option1(username):
     userinput = input("Please, enter the username ")
     while len(userinput) == 0:
         userinput = input("Username is null please enter another name, please enter another name ")
@@ -41,13 +43,12 @@ def option1(username, passwords):
             userinput = input("Username is null please enter another name, please enter another name ")
     username[userinput] = "User"
     print("Please enter a password for this user:")
-    password = input()
-    passwords[userinput] = password
+    passwords = input()
     print("User " + userinput + " registered")
     with open('users.csv', 'r+') as rwf:
-        rwf.write("\n" + userinput + ",")
-        rwf.write(password + ",")
-        rwf.write(username[userinput])
+        rwf.write(userinput + ",")
+        rwf.write(passwords + ",")
+        rwf.write(username[userinput + "\n"])
     print("Would you like to switch to this user? Y/N")
     yes_r_no = input("")
     yes_r_no = yes_r_no.lower()
@@ -143,7 +144,8 @@ def login(users):
         elif usercheck in users:
             print("Welcome " + usercheck + " Please enter you password")
             passcheck = input()
-            while users[usercheck["Password"]] != passcheck:
+            password = users[usercheck]
+            while password["Password"] != passcheck:
                 print("Password is incorrect")
                 print("Please enter correct password")
                 passcheck = input()
@@ -152,7 +154,8 @@ def login(users):
     if usercheck in users:
         print("Welcome " + usercheck + " Please enter you password")
         passcheck = input()
-        while users[usercheck["Password"]] != passcheck:
+        password = users[usercheck]
+        while password["Password"] != passcheck:
             print("Password is incorrect")
             print("Please enter correct password")
             passcheck = input()
@@ -160,7 +163,8 @@ def login(users):
         return usercheck
 
 def admin_account(users, current_user):
-    if users[current_user["Usertype"]] == 'Admin':
+    usertypes = users[current_user]
+    if usertypes["Usertype"] == 'Admin':
         admin_menu()
         selection = (input(""))
         options = {'1' , '2' , '3', '4', '5'}
@@ -175,7 +179,8 @@ def admin_account(users, current_user):
                     current_user = previouse_user
                     admin_account(users, current_user)
                     break
-                elif users[current_user["Usertype"]] == 'Admin':
+                usertypes = users[current_user]
+                if usertypes["Usertype"] == 'Admin':
                     admin_account(users, current_user)
                     break
                 else:
@@ -194,15 +199,17 @@ def non_admin_account(users, current_user):
     menu()
     selection = (input(""))
     options = {'1', '2', '3', '4'}
+    usertypes = users[current_user]
     while selection not in options:
         menu()
         selection = (input(""))
     while selection != '4':
         if selection == '1':
             current_user = option1(users)
+            usertypes = users[current_user]
             menu()
             selection = input()
-            if users[current_user["Usertype"]] == 'Admin':
+            if usertypes["Usertype"] == 'Admin':
                 admin_account(users, current_user)
                 break
         elif selection == '3':
