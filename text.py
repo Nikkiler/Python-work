@@ -6,6 +6,8 @@ with open('test.txt', 'r') as f:
     f_contents = f.readline()
     print(f_contents)
 """
+
+
 import csv
 with open("test.csv", "r") as handler:
     reader = csv.DictReader(handler, delimiter=',')

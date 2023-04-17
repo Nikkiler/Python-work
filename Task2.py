@@ -1,28 +1,35 @@
+import csv
 def main():
-    username = {"Bob": "Admin"}
-    user_pass = {"Bob": "All_that_is_gold_does_not_glitter"}
     current_user = None
+    cr = None
+    users = {}
+    with open("users.csv", "r") as handler:
+        reader = csv.DictReader(handler, delimiter=',')
+        for row in reader:
+            print(row)
+            cr = row['Username']
+            users[cr] = row
     while True:
         print("If you are an existing User Login if not please Register")
         print("1.Login")
         print("2.Register")
         choice = input()
         if choice == '1':
-            register = login(username, user_pass)
+            register = login(users)
             if register == False:
-                current_user = option1(username, user_pass)
+                current_user = option1(users)
             else:
                 current_user = register
             break
 
         elif choice == '2':
-            current_user = option1(username, user_pass)
+            current_user = option1(users)
             break
 
-    if username[current_user] != 'Admin':
-        non_admin_account(username, user_pass, current_user)
-    elif username[current_user] == "Admin":
-        admin_account(username, user_pass, current_user)
+    if users[current_user["Usertype"]] != 'Admin':
+        non_admin_account(users, current_user)
+    elif users[current_user["Usertype"]] == "Admin":
+        admin_account(users, current_user)
     print("Thank you for using our secret chat!")
 def option1(username, passwords):
     userinput = input("Please, enter the username ")
@@ -37,10 +44,10 @@ def option1(username, passwords):
     password = input()
     passwords[userinput] = password
     print("User " + userinput + " registered")
-    with open('users.txt', 'r+') as rwf:
-        rwf.write(userinput + "\n")
-        rwf.write(password + "\n")
-        rwf.write(username[userinput] + "\n")
+    with open('users.csv', 'r+') as rwf:
+        rwf.write("\n" + userinput + ",")
+        rwf.write(password + ",")
+        rwf.write(username[userinput])
     print("Would you like to switch to this user? Y/N")
     yes_r_no = input("")
     yes_r_no = yes_r_no.lower()
@@ -86,9 +93,9 @@ def option4(username):
     print("User has either been created with permissions chosen or User permissions have been updated or u have left this option")
 
 
-def option5(username):
-    for user, permisions in username.items():
-        print(user + " is a " + permisions)
+def option5(users):
+    for user, permisions in users.items():
+        print(users + " is a " + permisions[user["Usertype"]])
 def menu():
     print("please choose one of the following menu items")
     print("by choosing the corosponding menu item and hitting enter")
@@ -123,37 +130,37 @@ def conversion(new_role):
         return 'Moderator'
     elif new_role == '3':
         return 'User'
-def login(username, user_pass):
+def login(users):
     print("please enter username")
     usercheck = input()
-    while usercheck not in username:
+    while usercheck not in users:
         print("please enter a created user")
         print("if you would like to go back and register a user please press enter")
         usercheck = input()
         if len(usercheck) == 0:
             return False
             break
-        elif usercheck in username:
+        elif usercheck in users:
             print("Welcome " + usercheck + " Please enter you password")
             passcheck = input()
-            while user_pass[usercheck] != passcheck:
+            while users[usercheck["Password"]] != passcheck:
                 print("Password is incorrect")
                 print("Please enter correct password")
                 passcheck = input()
             print("Welcome back " + usercheck)
             return usercheck
-    if usercheck in username:
+    if usercheck in users:
         print("Welcome " + usercheck + " Please enter you password")
         passcheck = input()
-        while user_pass[usercheck] != passcheck:
+        while users[usercheck["Password"]] != passcheck:
             print("Password is incorrect")
             print("Please enter correct password")
             passcheck = input()
         print("Welcome back " + usercheck)
         return usercheck
 
-def admin_account(username, user_pass, current_user):
-    if username[current_user] == 'Admin':
+def admin_account(users, current_user):
+    if users[current_user["Usertype"]] == 'Admin':
         admin_menu()
         selection = (input(""))
         options = {'1' , '2' , '3', '4', '5'}
@@ -163,26 +170,26 @@ def admin_account(username, user_pass, current_user):
         while selection != '5':
             if selection == '1':
                 previouse_user = current_user
-                current_user = option1(username, user_pass)
+                current_user = option1(users)
                 if current_user == False:
                     current_user = previouse_user
-                    admin_account(username, user_pass, current_user)
+                    admin_account(users, current_user)
                     break
-                elif username[current_user] == 'Admin':
-                    admin_account(username, user_pass, current_user)
+                elif users[current_user["Usertype"]] == 'Admin':
+                    admin_account(users, current_user)
                     break
                 else:
-                    admin_account(username, user_pass, current_user)
+                    admin_account(users, current_user)
 
             elif selection == '4':
-                option5(username)
-                admin_account(username, user_pass, current_user)
+                option5(users)
+                admin_account(users, current_user)
                 break
             elif selection == '3':
-                option4(username)
-                admin_account(username, user_pass, current_user)
+                option4(users)
+                admin_account(users, current_user)
                 break
-def non_admin_account(username, user_pass, current_user):
+def non_admin_account(users, current_user):
     current_user = current_user
     menu()
     selection = (input(""))
@@ -192,14 +199,14 @@ def non_admin_account(username, user_pass, current_user):
         selection = (input(""))
     while selection != '4':
         if selection == '1':
-            current_user = option1(username, user_pass)
+            current_user = option1(users)
             menu()
             selection = input()
-            if username[current_user] == 'Admin':
-                admin_account(username, user_pass, current_user)
+            if users[current_user["Usertype"]] == 'Admin':
+                admin_account(users, current_user)
                 break
         elif selection == '3':
-            option5(username)
+            option5(users)
             menu()
             selection = input()
 if __name__ == '__main__':
