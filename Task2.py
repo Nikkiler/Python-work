@@ -33,6 +33,12 @@ def main():
     elif usertypes["Usertype"] == "Admin":
         admin_account(users, current_user)
     print("Thank you for using our secret chat!")
+    with open('users.csv', 'w') as wf:
+        fieldnames = ['Username', 'Password', 'Usertype']
+        writer = csv.DictWriter(wf, fieldnames=fieldnames)
+        writer.writeheader()
+        for key, value in users:
+            writer.writerow(value)
 def option1(username):
     userinput = input("Please, enter the username ")
     while len(userinput) == 0:
@@ -45,10 +51,7 @@ def option1(username):
     print("Please enter a password for this user:")
     passwords = input()
     print("User " + userinput + " registered")
-    with open('users.csv', 'r+') as rwf:
-        rwf.write(userinput + ",")
-        rwf.write(passwords + ",")
-        rwf.write(username[userinput + "\n"])
+    username[userinput] = {'Name': userinput, 'Password': passwords, 'Usertype': 'User'}
     print("Would you like to switch to this user? Y/N")
     yes_r_no = input("")
     yes_r_no = yes_r_no.lower()
