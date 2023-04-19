@@ -78,7 +78,8 @@ def option4(username):
             if new_roll != 'Admin' and new_roll != 'Moderator' and new_roll != 'User':
                 new_roll = usertype(new_roll)
                 new_roll = conversion(new_roll)
-            username[changed_user] = new_roll
+            password = username[changed_user]
+            username[changed_user] = {'Username': changed_user, "Password": password["Password"], "Usertype": new_roll}
     else:
         print("This action will create a new user with chosen role")
         printpermissions()
@@ -90,10 +91,7 @@ def option4(username):
         username[changed_user] = new_roll
         print("Please enter a password for this user:")
         password = input()
-        with open('users.txt', 'r+') as rwf:
-            rwf.write(changed_user + "\n")
-            rwf.write(password + "\n")
-            rwf.write(username[changed_user] + "\n")
+        username[changed_user] = {'Name': changed_user, 'Password': password, 'Usertype': new_roll}
     print("User has either been created with permissions chosen or User permissions have been updated or u have left this option")
 
 
