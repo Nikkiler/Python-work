@@ -37,7 +37,7 @@ def main():
         fieldnames = ['Username', 'Password', 'Usertype']
         writer = csv.DictWriter(wf, fieldnames=fieldnames)
         writer.writeheader()
-        for key, value in users:
+        for key, value in users.items():
             writer.writerow(value)
 def option1(username):
     userinput = input("Please, enter the username ")
