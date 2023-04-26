@@ -34,7 +34,13 @@ def connect():
         print("What would you like to send")
         message = input('')
         sio.emit('message_r', message)
-
+        while answer != 'y':
+            print("What would you like to send")
+            message = input('')
+            sio.emit('message_r', message)
+            print('would you like to exit? y/n')
+            answer = input('')
+            answer = answer.lower()
 
 @sio.event
 def disconnect():
