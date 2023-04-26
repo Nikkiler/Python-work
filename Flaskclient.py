@@ -1,5 +1,5 @@
 import socketio
-
+import sys
 sio = socketio.Client()
 
 @sio.event
@@ -15,6 +15,21 @@ def connect():
         username = input('')
         print('User registered')
         sio.emit('register', username)
+        print(f'Welcome {username}')
+        print("What would you like to send")
+        message = input('')
+        sio.emit('message_r', message)
+        print('would you like to exit? y/n')
+        answer = input('')
+        answer = answer.lower()
+        while answer != 'y':
+            print("What would you like to send")
+            message = input('')
+            sio.emit('message_r', message)
+            print('would you like to exit? y/n')
+            answer = input('')
+            answer = answer.lower()
+
     else:
         print("What would you like to send")
         message = input('')
@@ -24,9 +39,6 @@ def connect():
 @sio.event
 def disconnect():
     print('disconnected from server')
-@sio.event
-def messanger(sid, username):
-    print(f"Welcome {sid} : {username}")
 
 sio.connect('http://localhost:5001')
 sio.wait()

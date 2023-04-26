@@ -25,7 +25,7 @@ def login(sid, data):
 @sio.event
 def register(sid, username):
     users[sid] = username
-    sio.emit('messanger', sid, username)
+    print(f'{sid} {username}')
 @sio.event
 def message_r(sid, message):
     print(f'Message recieved {message}')
