@@ -27,7 +27,7 @@ def register(sid, username):
     users[sid] = username
     print(f'{sid} {username}')
 @sio.event
-def message_r(sid, message):
-    print(f'Message recieved {message}')
+def message_r(sid, message, Username):
+    print(f'Message recieved {message} from {Username}')
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('', 5001)), app)
