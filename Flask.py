@@ -23,11 +23,15 @@ def login(sid, data):
 # def message(message):
 #     print(f"Message event {message}")
 @sio.event
-def register(sid, username):
-    users[sid] = username
+def register(sid, user):
+    username = user[0]
+    password = user[1]
+    users[username] = password
     print(f'{sid} {username}')
 @sio.event
-def message_r(sid, message, Username):
-    print(f'Message recieved {message} from {Username}')
+def message_r(sid, message):
+    username = message[1]
+    messages = message[0]
+    print(f'Message recieved {messages} from {username}')
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('', 5001)), app)

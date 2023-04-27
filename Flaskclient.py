@@ -5,17 +5,13 @@ users = {}
 def connect():
     print('connection established')
     print('1.Register')
-    print('2.Send message')
-    print('3.Login')
+    print('2.Login')
     choice = input('')
-    while choice != '1' and choice != '2' and choice != '3':
+    while choice != '1' and choice != '2':
         print('Please enter either 1 or 2')
     if choice == '1':
         option1()
-
     elif choice == '2':
-        option2()
-    elif choice == '3':
         option3()
 
 
@@ -28,11 +24,26 @@ def option1():
     print('Please enter a password')
     password = input('')
     print('User registered')
-    sio.emit('register', username)
+    sio.emit('register', [username, password])
     print(f'Welcome {username}')
     print("What would you like to send")
     message = input('')
-    sio.emit('message_r', message)
+    sio.emit('message_r', [message, username])
+    print('would you like to exit? y/n')
+    answer = input('')
+    answer = answer.lower()
+    while answer != 'y':
+        print("What would you like to send")
+        message = input('')
+        sio.emit('message_r', [message, username])
+        print('would you like to exit? y/n')
+        answer = input('')
+        answer = answer.lower()
+    users[username] = password
+def option2(username):
+    print("What would you like to send")
+    message = input('')
+    sio.emit('message_r', message, username)
     print('would you like to exit? y/n')
     answer = input('')
     answer = answer.lower()
@@ -40,21 +51,6 @@ def option1():
         print("What would you like to send")
         message = input('')
         sio.emit('message_r', message, username)
-        print('would you like to exit? y/n')
-        answer = input('')
-        answer = answer.lower()
-    users[username] = password
-def option2():
-    print("What would you like to send")
-    message = input('')
-    sio.emit('message_r', message)
-    print('would you like to exit? y/n')
-    answer = input('')
-    answer = answer.lower()
-    while answer != 'y':
-        print("What would you like to send")
-        message = input('')
-        sio.emit('message_r', message)
         print('would you like to exit? y/n')
         answer = input('')
         answer = answer.lower()
@@ -68,6 +64,6 @@ def option3():
             print('Please enter correct password')
             password = input('')
         print(f"Welcome {current_user}")
-        option2()
+        option2(current_user)
 sio.connect('http://localhost:5001')
 sio.wait()
