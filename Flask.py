@@ -9,15 +9,15 @@ app = socketio.WSGIApp(sio, static_files={
 users = {'Bob': 'is cool'}
 
 @sio.event
-def user_check(sid, username):
+def password_check(sid, username, password):
     if username in users:
-        return 'user in users'
-@sio.event
-def password_check(sid, tuple):
-    username = tuple[0]
-    password = tuple[1]
-    if users[username] == 'password':
-        return 'Password is correct'
+        if users[username] == password:
+            return username
+        else:
+            return 'Password or user are incorrect'
+    else:
+        return 'Password or user are incorrect'
+
 
 
 @sio.event
@@ -39,18 +39,14 @@ def login(sid, data):
 # def message(message):
 #     print(f"Message event {message}")
 @sio.event
-def register(sid, user):
-    username = user[0]
-    password = user[1]
+def register(sid, username, password):
     users[username] = password
     print(f'{sid} {username}')
 
 
 @sio.event
-def message_r(sid, message):
-    username = message[1]
-    messages = message[0]
-    print(f'Message received {messages} from {username}')
+def message_r(sid, message, username):
+    print(f'Message received {message} from {username}')
 
 
 if __name__ == '__main__':

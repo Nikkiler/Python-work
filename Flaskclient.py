@@ -21,6 +21,7 @@ def main_menu():
     choice = input('')
     while choice != '1' and choice != '2' and choice != '3':
         print('Please enter either 1 or 2 or 3')
+        choice = input('')
     username = None
     if choice == '1':
         username = option1()
@@ -44,7 +45,8 @@ def option1():
     print('Please enter a password')
     password = input('')
     print('User registered')
-    sio.emit('user_register',)
+    sio.emit('user_register',(username, password))
+    chat(username)
 
 
 def chat(username):
@@ -64,19 +66,24 @@ def chat(username):
         answer = answer.lower()
 
 
+def check(data):
+    if data == 'Password or user are incorrect':
+        print('Password or user are incorrect')
+        current_user = option2()
+    else:
+        chat(data)
+
 def option2():
-    print('Enter Username')
-    current_user = input('')
-    sio.emit('user_check', current_user, callback=password_check)
-    return current_user
-def password_check():
     while True:
+        print('Enter Username')
+        current_user = input('')
         print("Enter password")
         print('Press enter if you would like to go back to main menu')
         password = input('')
         if len(password) == 0:
             main_menu()
-        else:
-            sio.emit('password_check', (username, password), callback=chat)
+            break
+        sio.emit('password_check', (current_user, password), callback=check)
+        return current_user
 sio.connect('http://localhost:5001')
 sio.wait()
