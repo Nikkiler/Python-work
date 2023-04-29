@@ -7,8 +7,11 @@ username = None
 @sio.event
 def connect():
     print('connection established')
+    sio.emit('join_room')
     main_menu()
-
+@sio.event
+def my_reply(data):
+    print(f'message from server {data}')
 
 
 @sio.event

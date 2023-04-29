@@ -7,7 +7,9 @@ app = socketio.WSGIApp(sio, static_files={
 })
 
 users = {'Bob': 'is cool'}
-
+@sio.event
+def join_room(sid):
+    sio.enter_room(sid, 'chat_users')
 @sio.event
 def password_check(sid, username, password):
     if username in users:
@@ -47,6 +49,7 @@ def register(sid, username, password):
 @sio.event
 def message_r(sid, message, username):
     print(f'Message received {message} from {username}')
+    sio.emit('my_reply',message ,room='chat_users')
 
 
 if __name__ == '__main__':
