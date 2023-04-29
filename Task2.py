@@ -138,7 +138,6 @@ def login(users):
         usercheck = input()
         if len(usercheck) == 0:
             return False
-            break
         elif usercheck in users:
             print("Welcome " + usercheck + " Please enter you password")
             passcheck = input()
