@@ -27,37 +27,28 @@ def password_check(sid, username, password):
     else:
         return 'Password or user are incorrect'
 
-
-
 @sio.event
 def connect(sid, environ, data):
     print('connect', sid)
 
-
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
+
+@sio.event
+def login(sid, data):
+    print(f"Login event {sid} {data}")
+
+@sio.event
+def register(sid, username, password):
+    users[username] = {'Username': username, 'Password': password, 'Usertype': 'User'}
+    print(f'{sid} {username}')
     with open('users.csv', 'w') as wf:
         fieldnames = ['Username', 'Password', 'Usertype']
         writer = csv.DictWriter(wf, fieldnames=fieldnames)
         writer.writeheader()
         for key, value in users.items():
             writer.writerow(value)
-
-
-@sio.event
-def login(sid, data):
-    print(f"Login event {sid} {data}")
-
-
-# @sio.event
-# def message(message):
-#     print(f"Message event {message}")
-@sio.event
-def register(sid, username, password):
-    users[username] = password
-    print(f'{sid} {username}')
-
 
 @sio.event
 def message_r(sid, message, username):

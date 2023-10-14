@@ -1,13 +1,16 @@
 import csv
-import socketio
-sio = socketio.Client()
-
-@sio.event
-def main(users):
+def main():
     current_user = None
     cr = None
+    users = {}
     password = None
     usertypes = None
+    with open("users.csv", "r") as handler:
+        reader = csv.DictReader(handler, delimiter=',')
+        for row in reader:
+            print(row)
+            cr = row['Username']
+            users[cr] = row
     while True:
         print("If you are an existing User Login if not please Register")
         print("1.Login")
@@ -30,8 +33,12 @@ def main(users):
     elif usertypes["Usertype"] == "Admin":
         admin_account(users, current_user)
     print("Thank you for using our secret chat!")
-    sio.emit('write_to_file', users)
-@sio.event
+    with open('users.csv', 'w') as wf:
+        fieldnames = ['Username', 'Password', 'Usertype']
+        writer = csv.DictWriter(wf, fieldnames=fieldnames)
+        writer.writeheader()
+        for key, value in users.items():
+            writer.writerow(value)
 def option1(username):
     userinput = input("Please, enter the username ")
     while len(userinput) == 0:
@@ -57,7 +64,7 @@ def option1(username):
     else:
         return False
 
-@sio.event
+
 def option4(username):
     print("Please enter username")
     changed_user = input()
@@ -87,11 +94,10 @@ def option4(username):
         username[changed_user] = {'Name': changed_user, 'Password': password, 'Usertype': new_roll}
     print("User has either been created with permissions chosen or User permissions have been updated or u have left this option")
 
-@sio.event
+
 def option5(users):
     for user, permisions in users.items():
         print(users + " is a " + permisions[user["Usertype"]])
-
 def menu():
     print("please choose one of the following menu items")
     print("by choosing the corosponding menu item and hitting enter")
@@ -112,15 +118,6 @@ def printpermissions():
     print("1. Admin")
     print("2. Moderator")
     print("3. User")
-@sio.event
-def conversion(new_role):
-    if new_role == '1':
-        return 'Admin'
-    elif new_role == '2':
-        return 'Moderator'
-    elif new_role == '3':
-        return 'User'
-@sio.event
 def usertype(new_role):
     while new_role != '1' and '2' and '3':
         printpermissions()
@@ -128,7 +125,13 @@ def usertype(new_role):
         if new_role == '1' or new_role == '2' or new_role == "3":
             break
     return new_role
-@sio.event
+def conversion(new_role):
+    if new_role == '1':
+        return 'Admin'
+    elif new_role == '2':
+        return 'Moderator'
+    elif new_role == '3':
+        return 'User'
 def login(users):
     print("please enter username")
     usercheck = input()
@@ -138,6 +141,7 @@ def login(users):
         usercheck = input()
         if len(usercheck) == 0:
             return False
+            break
         elif usercheck in users:
             print("Welcome " + usercheck + " Please enter you password")
             passcheck = input()
@@ -158,7 +162,7 @@ def login(users):
             passcheck = input()
         print("Welcome back " + usercheck)
         return usercheck
-@sio.event
+
 def admin_account(users, current_user):
     usertypes = users[current_user]
     if usertypes["Usertype"] == 'Admin':
@@ -213,5 +217,5 @@ def non_admin_account(users, current_user):
             option5(users)
             menu()
             selection = input()
-sio.connect('http://localhost:5001')
-sio.wait()
+if __name__ == '__main__':
+    main()

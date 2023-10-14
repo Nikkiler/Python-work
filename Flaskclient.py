@@ -48,7 +48,7 @@ def option1():
     print('Please enter a password')
     password = input('')
     print('User registered')
-    sio.emit('user_register',(username, password))
+    sio.emit('register',(username, password))
     chat(username)
 
 
